@@ -1,0 +1,22 @@
+{
+  "name": "polslides",
+  "dependencies": {
+    "choo": "^7.1.0",
+    "level": "^7.0.1",
+    "subleveldown": "^6.0.1"
+  },
+  "devDependencies": {
+    "budo": "^11.6.4",
+    "indexhtmlify": "^2.0.1",
+    "standard": "^17.0.0",
+    "tinyify": "^3.1.0"
+  },
+  "scripts": {
+    "test": "standard",
+    "start": "npm run prepare && cp index-dev.html public/index.html && npm run web",
+    "build": "npm run prepare && npm run browserify",
+    "prepare": "rm -rf public && mkdir public",
+    "browserify": "browserify app.js | indexhtmlify --title 'polslides' > public/index.html",
+    "web": "budo app.js -l -d public"
+  }
+}
