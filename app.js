@@ -13,45 +13,84 @@ app.use((state, emitter) => {
   // const slidesDb = sub(db, 'slides', {
   //   valueEncoding: 'json'
   // })
+  // TODO ids should be uuids
 
-  const cards = [
+  const allCards = [
     {
-      name: 'card1',
-      color: 'blue'
+      title: 'card1',
+      color: 'blue',
+      id: 1
     },
     {
-      name: 'card2',
-      color: 'blue'
+      title: 'card2',
+      color: 'blue',
+      id: 2
     },
     {
-      name: 'card3',
-      color: 'blue'
+      title: 'card3',
+      color: 'blue',
+      id: 3
     },
     {
-      name: 'card4',
-      color: 'red'
+      title: 'card4',
+      color: 'red',
+      id: 4
     },
     {
-      name: 'card5',
-      color: 'red'
+      title: 'card5',
+      color: 'red',
+      id: 5
     }
   ]
 
+  // A slide object has a name and an array of cards
+  // But the play state, vote state etc should be separate
   const slides = [
     {
       name: 'slide1',
-      cards: []
-    },
-    {
-      name: 'slides',
-      cards: []
+      cards: [5, 1, 4]
     }
   ]
 
   state.app = {
-    cards,
-    slides
+    allCards,
+    slides,
+    play: null
   }
+
+  function cardState ({ cards }) {
+    return cards.map(id => {
+      const card = allCards.find(c => c.id === id)
+      if (card) {
+        return { ...card }
+      } else {
+        console.warn('failed to find card with id', id)
+        return false
+      }
+    }).filter(Boolean)
+  }
+
+  emitter.on('start', slideName => {
+    const slide = slides.find(s => s.name === slideName)
+    if (slide) {
+      console.log('starting slide', slideName, slide)
+      const toPlay = cardState(slide)
+      console.log('toPlay card state', JSON.stringify(toPlay, null, 2))
+      state.app.play = {
+        slideName,
+        toPlay,
+        played: []
+      }
+      emitter.emit('render')
+    } else {
+      console.error('could not find slide', slideName)
+    }
+  })
+
+  emitter.on('stop', () => {
+    state.app.play = null
+    emitter.emit('render')
+  })
 })
 
 function style () {
@@ -124,51 +163,41 @@ function style () {
 }
 
 function appView (state, emit) {
-  const { app } = state
   // TODO figure out what we can do with flex to have
   // items just wrap around but not space out vertically
+
+  const playState = state.app.play
+  const canStop = playState
+  const canStart = !canStop
+  const canShowSettings = canStart
+
+  // TODO pick slide name from drop down or similar
+  const slideName = 'slide1'
+
+  // TODO can click reverse button if we are playing and if we have
+  // played some cards
+  const upCards = playState?.played.filter(c => c.vote === 'up') || []
+  const downCards = playState?.played.filter(c => c.vote === 'down') || []
+
   return html`<div id='app'>
     <div id='toolbar'>
       <div>
-        <button disabled class='toolbar-icon'>▶</button>
-        <button disabled class='toolbar-icon'>⏹</button>
-        <button disabled class='toolbar-icon'>⏪</button>
+        <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='toolbar-icon'>▶</button>
+        <button disabled=${!canStop} onclick=${() => emit('stop')} class='toolbar-icon'>⏹</button>
+        <button class='toolbar-icon'>⏪</button>
       </div>
-        <button disabled class='toolbar-icon'>⚙</button>
+        <button disabled=${!canShowSettings} class='toolbar-icon'>⚙</button>
       </div>
     </div>
     <div id='card-area'>
       <div id='positive-wrapper'>
         <div class='card-holder'>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
+          ${upCards.map(c => html`<div class='card'>${c.title}</div>`)}
         </div>
       </div>
       <div id='negative-wrapper'>
         <div class='card-holder'>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
-          <div class='card'>card</div>
+          ${downCards.map(c => html`<div class='card'>${c.title}</div>`)}
         </div>
       </div>
     </div>
