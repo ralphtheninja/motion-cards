@@ -64,12 +64,20 @@ function style () {
       top: 0;
       left: 0;
       right: 0;
-      height: 40px;
+      height: 50px;
       border-bottom: 1px solid black;
+      display: flex;
+      justify-content: space-between;
+    }
+    .toolbar-icon {
+      font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+      font-size: 2.0em;
+      cursor: pointer;
+      height: 50px;
     }
     #card-area {
       position: absolute;
-      top: 40px;
+      top: 50px;
       left: 0;
       right: 0;
       bottom: 0;
@@ -120,7 +128,15 @@ function appView (state, emit) {
   // TODO figure out what we can do with flex to have
   // items just wrap around but not space out vertically
   return html`<div id='app'>
-    <div id='toolbar'>toolbar</div>
+    <div id='toolbar'>
+      <div>
+        <button disabled class='toolbar-icon'>▶</button>
+        <button disabled class='toolbar-icon'>⏹</button>
+        <button disabled class='toolbar-icon'>⏪</button>
+      </div>
+        <button disabled class='toolbar-icon'>⚙</button>
+      </div>
+    </div>
     <div id='card-area'>
       <div id='positive-wrapper'>
         <div class='card-holder'>
