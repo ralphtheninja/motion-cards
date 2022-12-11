@@ -86,10 +86,31 @@ app.use((state, emitter) => {
       console.error('could not find slide', slideName)
     }
   })
-
   emitter.on('stop', () => {
     state.app.play = null
     emitter.emit('render')
+  })
+  emitter.on('vote-up', card => {
+    const playState = state.app.play
+    if (playState) {
+      const toPlay = playState.toPlay.slice(1)
+      const played = playState.played.slice()
+      played.push({ ...card, vote: 'up' })
+      playState.toPlay = toPlay
+      playState.played = played
+      emitter.emit('render')
+    }
+  })
+  emitter.on('vote-down', card => {
+    const playState = state.app.play
+    if (playState) {
+      const toPlay = playState.toPlay.slice(1)
+      const played = playState.played.slice()
+      played.push({ ...card, vote: 'down' })
+      playState.toPlay = toPlay
+      playState.played = played
+      emitter.emit('render')
+    }
   })
 })
 
@@ -201,7 +222,7 @@ function appView (state, emit) {
   // played some cards
 
   return html`<div id='app'>
-    ${nextCard && renderNextCard(nextCard)}
+    ${nextCard && renderNextCard(nextCard, emit)}
     <div id='toolbar'>
       <div>
         <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon'>▶</button>
@@ -227,12 +248,12 @@ function appView (state, emit) {
   </div>`
 }
 
-function renderNextCard (card) {
+function renderNextCard (card, emit) {
   return html`<div id='next-card'>
-    <div style="border: 0px solid yellow;">${card.title}</div>
+    <div style="border: 0aopx solid yellow;">${card.title}</div>
     <div style="display: flex; justify-content: space-between; border: 0px solid yellow;">
-      <button class='emoji-icon'>➕</button>
-      <button class='emoji-icon'>➖</button>
+      <button onclick=${() => emit('vote-up', card)} class='emoji-icon'>➕</button>
+      <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
     </div>
    </div>`
 }
