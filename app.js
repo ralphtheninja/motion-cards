@@ -234,7 +234,7 @@ function appView (state, emit) {
   const canBack = played.length > 0
 
   return html`<div id='app'>
-    ${nextCard && renderNextCard(nextCard, emit)}
+    ${(nextCard && renderNextCard(nextCard, emit)) || null}
     <div id='toolbar'>
       <div>
         <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon'>▶</button>
