@@ -139,6 +139,17 @@ function style () {
       right: 0;
       border: 0px solid red;
     }
+    #next-card {
+      position: absolute;
+      top: 25%;
+      bottom: 25%;
+      left: 25%;
+      right: 25%;
+      border: 1px solid black;
+      background: #8f8f8f;
+      padding: 30px;
+      z-index: 10;
+    }
     .card-holder {
       position: absolute;
       border: 0px solid blue;
@@ -167,24 +178,33 @@ function appView (state, emit) {
   // items just wrap around but not space out vertically
 
   const playState = state.app.play
+
   const canStop = playState
   const canStart = !canStop
   const canShowSettings = canStart
+  const upCards = playState?.played.filter(c => c.vote === 'up') || []
+  const downCards = playState?.played.filter(c => c.vote === 'down') || []
+  const toPlay = playState?.toPlay
+  const canTurnCards = Array.isArray(toPlay) && toPlay.length === 0
 
+  const nextCard = Array.isArray(toPlay) && toPlay.length > 0 && toPlay[0]
   // TODO pick slide name from drop down or similar
   const slideName = 'slide1'
 
+  // TODO cursor on toolbar buttons should have 'default' state if they
+  // are disabled
+
   // TODO can click reverse button if we are playing and if we have
   // played some cards
-  const upCards = playState?.played.filter(c => c.vote === 'up') || []
-  const downCards = playState?.played.filter(c => c.vote === 'down') || []
 
   return html`<div id='app'>
+    ${nextCard && renderNextCard(nextCard)}
     <div id='toolbar'>
       <div>
         <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='toolbar-icon'>▶</button>
         <button disabled=${!canStop} onclick=${() => emit('stop')} class='toolbar-icon'>⏹</button>
-        <button class='toolbar-icon'>⏪</button>
+        <button disabled class='toolbar-icon'>⏪</button>
+        <button disabled=${!canTurnCards} class='toolbar-icon'>🔁</button>
       </div>
         <button disabled=${!canShowSettings} class='toolbar-icon'>⚙</button>
       </div>
@@ -202,6 +222,10 @@ function appView (state, emit) {
       </div>
     </div>
   </div>`
+}
+
+function renderNextCard (card) {
+  return html`<div id='next-card'>next card</div>`
 }
 
 app.route('*', (state, emit) => {
