@@ -167,10 +167,10 @@ function style () {
     }
     #next-card {
       position: absolute;
-      top: 25%;
-      bottom: 25%;
-      left: 25%;
-      right: 25%;
+      top: 30%;
+      bottom: 30%;
+      left: 30%;
+      right: 30%;
       border: 1px solid black;
       background: #c0c0c0;
       padding: 20px;
