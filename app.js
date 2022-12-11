@@ -144,7 +144,6 @@ function style () {
       font-size: 2.0em;
       cursor: pointer;
       height: 50px;
-      background: lightgray;
     }
     #card-area {
       position: absolute;
@@ -227,9 +226,6 @@ function appView (state, emit) {
   // TODO pick slide name from drop down or similar
   const slideName = 'slide1'
 
-  // TODO cursor on toolbar buttons should have 'default' state if they
-  // are disabled
-
   const played = playState?.played || []
   const canBack = played.length > 0
 
@@ -237,12 +233,12 @@ function appView (state, emit) {
     ${(nextCard && renderNextCard(nextCard, emit)) || null}
     <div id='toolbar'>
       <div>
-        <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon'>▶</button>
-        <button disabled=${!canStop} onclick=${() => emit('stop')} class='emoji-icon'>⏹</button>
-        <button disabled=${!canBack} onclick=${() => emit('back')} class='emoji-icon'>⏪</button>
-        <button disabled=${!canTurnCards} class='emoji-icon'>🔁</button>
+        <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon' style='cursor: ${canStart ? 'pointer' : 'default'}'>▶</button>
+        <button disabled=${!canStop} onclick=${() => emit('stop')} class='emoji-icon' style='cursor: ${canStop ? 'pointer' : 'default'}'>⏹</button>
+        <button disabled=${!canBack} onclick=${() => emit('back')} class='emoji-icon' style='cursor: ${canBack ? 'pointer' : 'default'}'>⏪</button>
+        <button disabled=${!canTurnCards} class='emoji-icon' style='cursor: ${canTurnCards ? 'pointer' : 'default'}'>🔁</button>
       </div>
-        <button disabled=${!canShowSettings} class='emoji-icon'>⚙</button>
+        <button disabled=${!canShowSettings} class='emoji-icon' style='cursor: ${canShowSettings ? 'pointer' : 'default'}'>⚙</button>
       </div>
     </div>
     <div id='card-area'>
