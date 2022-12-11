@@ -1,6 +1,6 @@
 # polslides
 
-> Educational tool for discussing political decisions historically
+> Educational tool for discussing historic political decisions
 
 ## license
 
