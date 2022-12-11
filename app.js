@@ -205,7 +205,6 @@ function style () {
       margin-right: 10px;
       margin-bottom: 10px;
       width: 100px;
-      background: #c0c0c0;
     }
   </style>`
 }
@@ -247,12 +246,12 @@ function appView (state, emit) {
     <div id='card-area'>
       <div id='positive-wrapper'>
         <div class='card-holder'>
-          ${upCards.map(renderPlayedCard)}
+          ${upCards.map(c => renderPlayedCard(c, cardsTurned))}
         </div>
       </div>
       <div id='negative-wrapper'>
         <div class='card-holder'>
-          ${downCards.map(renderPlayedCard)}
+          ${downCards.map(c => renderPlayedCard(c, cardsTurned))}
         </div>
       </div>
     </div>
@@ -269,8 +268,9 @@ function renderNextCard (card, emit) {
    </div>`
 }
 
-function renderPlayedCard (card) {
-  return html`<div class='card'>
+function renderPlayedCard (card, turned) {
+  const background = turned ? card.color : '#c0c0c0'
+  return html`<div class='card' style='background: ${background}'>
     ${card.title}
   </div>`
 }
