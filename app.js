@@ -144,6 +144,7 @@ function style () {
       font-size: 2.0em;
       cursor: pointer;
       height: 50px;
+      background: lightgray;
     }
     #card-area {
       position: absolute;
@@ -177,7 +178,7 @@ function style () {
       left: 25%;
       right: 25%;
       border: 1px solid black;
-      background: #8f8f8f;
+      background: #c0c0c0;
       padding: 20px;
       z-index: 10;
       display: flex;
@@ -203,6 +204,7 @@ function style () {
       margin-right: 10px;
       margin-bottom: 10px;
       width: 100px;
+      background: #c0c0c0;
     }
   </style>`
 }
@@ -260,7 +262,7 @@ function appView (state, emit) {
 
 function renderNextCard (card, emit) {
   return html`<div id='next-card'>
-    <div style="border: 0aopx solid yellow;">${card.title}</div>
+    <div style="border: 0px solid yellow;">${card.title}</div>
     <div style="display: flex; justify-content: space-between; border: 0px solid yellow;">
       <button onclick=${() => emit('vote-up', card)} class='emoji-icon'>➕</button>
       <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
@@ -269,7 +271,7 @@ function renderNextCard (card, emit) {
 }
 
 app.route('*', (state, emit) => {
-  return html`<body style="margin: 0; height: 100%; background: #bbbaba; border: 0px solid red;">
+  return html`<body style="margin: 0; height: 100%; background: lightgray; border: 0px solid red;">
     ${style()}
     ${appView(state, emit)}
   </body>`
