@@ -64,7 +64,7 @@ app.use((state, emitter) => {
       if (card) {
         return { ...card }
       } else {
-        console.warn('failed to find card with id', id)
+        console.error('failed to find card with id', id)
         return false
       }
     }).filter(Boolean)
@@ -73,9 +73,7 @@ app.use((state, emitter) => {
   emitter.on('start', slideName => {
     const slide = slides.find(s => s.name === slideName)
     if (slide) {
-      console.log('starting slide', slideName, slide)
       const toPlay = cardState(slide)
-      console.log('toPlay card state', JSON.stringify(toPlay, null, 2))
       state.app.play = {
         slideName,
         toPlay,
