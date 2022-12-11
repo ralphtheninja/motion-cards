@@ -108,7 +108,7 @@ function style () {
       display: flex;
       justify-content: space-between;
     }
-    .toolbar-icon {
+    .emoji-icon {
       font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
       font-size: 2.0em;
       cursor: pointer;
@@ -147,8 +147,11 @@ function style () {
       right: 25%;
       border: 1px solid black;
       background: #8f8f8f;
-      padding: 30px;
+      padding: 20px;
       z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .card-holder {
       position: absolute;
@@ -201,12 +204,12 @@ function appView (state, emit) {
     ${nextCard && renderNextCard(nextCard)}
     <div id='toolbar'>
       <div>
-        <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='toolbar-icon'>▶</button>
-        <button disabled=${!canStop} onclick=${() => emit('stop')} class='toolbar-icon'>⏹</button>
-        <button disabled class='toolbar-icon'>⏪</button>
-        <button disabled=${!canTurnCards} class='toolbar-icon'>🔁</button>
+        <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon'>▶</button>
+        <button disabled=${!canStop} onclick=${() => emit('stop')} class='emoji-icon'>⏹</button>
+        <button disabled class='emoji-icon'>⏪</button>
+        <button disabled=${!canTurnCards} class='emoji-icon'>🔁</button>
       </div>
-        <button disabled=${!canShowSettings} class='toolbar-icon'>⚙</button>
+        <button disabled=${!canShowSettings} class='emoji-icon'>⚙</button>
       </div>
     </div>
     <div id='card-area'>
@@ -225,7 +228,13 @@ function appView (state, emit) {
 }
 
 function renderNextCard (card) {
-  return html`<div id='next-card'>next card</div>`
+  return html`<div id='next-card'>
+    <div style="border: 0px solid yellow;">${card.title}</div>
+    <div style="display: flex; justify-content: space-between; border: 0px solid yellow;">
+      <button class='emoji-icon'>➕</button>
+      <button class='emoji-icon'>➖</button>
+    </div>
+   </div>`
 }
 
 app.route('*', (state, emit) => {
