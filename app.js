@@ -90,6 +90,18 @@ app.use((state, emitter) => {
     state.app.play = null
     emitter.emit('render')
   })
+  emitter.on('back', () => {
+    const playState = state.app.play
+    if (playState) {
+      const toPlay = playState.toPlay.slice()
+      const played = playState.played.slice()
+      const card = played.pop()
+      toPlay.unshift({ ...card, vote: undefined })
+      playState.toPlay = toPlay
+      playState.played = played
+      emitter.emit('render')
+    }
+  })
   emitter.on('vote-up', card => {
     const playState = state.app.play
     if (playState) {
@@ -218,8 +230,8 @@ function appView (state, emit) {
   // TODO cursor on toolbar buttons should have 'default' state if they
   // are disabled
 
-  // TODO can click reverse button if we are playing and if we have
-  // played some cards
+  const played = playState?.played || []
+  const canBack = played.length > 0
 
   return html`<div id='app'>
     ${nextCard && renderNextCard(nextCard, emit)}
@@ -227,7 +239,7 @@ function appView (state, emit) {
       <div>
         <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon'>▶</button>
         <button disabled=${!canStop} onclick=${() => emit('stop')} class='emoji-icon'>⏹</button>
-        <button disabled class='emoji-icon'>⏪</button>
+        <button disabled=${!canBack} onclick=${() => emit('back')} class='emoji-icon'>⏪</button>
         <button disabled=${!canTurnCards} class='emoji-icon'>🔁</button>
       </div>
         <button disabled=${!canShowSettings} class='emoji-icon'>⚙</button>
