@@ -214,13 +214,13 @@ function appView (state, emit) {
   const upCards = playState?.played.filter(c => c.vote === 'up') || []
   const downCards = playState?.played.filter(c => c.vote === 'down') || []
   const toPlay = playState?.toPlay
-  const canTurnCards = Array.isArray(toPlay) && toPlay.length === 0
+  const played = playState?.played || []
+  const canTurnCards = upCards.length || downCards.length
 
   const nextCard = Array.isArray(toPlay) && toPlay.length > 0 && toPlay[0]
   // TODO pick slide name from drop down or similar
   const slideName = 'slide1'
 
-  const played = playState?.played || []
   const canBack = played.length > 0
 
   return html`<div id='app'>
