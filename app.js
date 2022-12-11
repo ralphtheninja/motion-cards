@@ -126,16 +126,12 @@ app.use((state, emitter) => {
 
 function style () {
   return html`<style>
-    #app {
-      border: 0px solid black;
-    }
     #toolbar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       height: 50px;
-      border-bottom: 1px solid black;
       display: flex;
       justify-content: space-between;
     }
@@ -151,7 +147,6 @@ function style () {
       left: 0;
       right: 0;
       bottom: 0;
-      border: 0px solid blue;
     }
     #positive-wrapper {
       position: absolute;
@@ -159,8 +154,9 @@ function style () {
       bottom: 50%;
       left: 0;
       right: 0;
-      border: 0px solid green;
-      border-bottom: 1px solid green;
+      border: 0;
+      border-bottom: 4px gray;
+      border-style: dashed;
     }
     #negative-wrapper {
       position: absolute;
@@ -168,7 +164,6 @@ function style () {
       bottom: 0;
       left: 0;
       right: 0;
-      border: 0px solid red;
     }
     #next-card {
       position: absolute;
@@ -186,7 +181,6 @@ function style () {
     }
     .card-holder {
       position: absolute;
-      border: 0px solid blue;
       top: 0;
       bottom: 0;
       left: 0;
@@ -258,8 +252,8 @@ function appView (state, emit) {
 
 function renderNextCard (card, emit) {
   return html`<div id='next-card'>
-    <div style="border: 0px solid yellow;">${card.title}</div>
-    <div style="display: flex; justify-content: space-between; border: 0px solid yellow;">
+    <div>${card.title}</div>
+    <div style="display: flex; justify-content: space-between;">
       <button onclick=${() => emit('vote-up', card)} class='emoji-icon'>➕</button>
       <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
     </div>
@@ -267,7 +261,7 @@ function renderNextCard (card, emit) {
 }
 
 app.route('*', (state, emit) => {
-  return html`<body style="margin: 0; height: 100%; background: lightgray; border: 0px solid red;">
+  return html`<body style="margin: 0; height: 100%; background: lightgray;">
     ${style()}
     ${appView(state, emit)}
   </body>`
