@@ -77,7 +77,8 @@ app.use((state, emitter) => {
       state.app.play = {
         slideName,
         toPlay,
-        played: []
+        played: [],
+        cardsTurned: false
       }
       emitter.emit('render')
     } else {
@@ -119,6 +120,13 @@ app.use((state, emitter) => {
       played.push({ ...card, vote: 'down' })
       playState.toPlay = toPlay
       playState.played = played
+      emitter.emit('render')
+    }
+  })
+  emitter.on('turn-cards', () => {
+    const playState = state.app.play
+    if (playState) {
+      playState.cardsTurned = !playState.cardsTurned
       emitter.emit('render')
     }
   })
@@ -216,6 +224,7 @@ function appView (state, emit) {
   const toPlay = playState?.toPlay
   const played = playState?.played || []
   const canTurnCards = upCards.length || downCards.length
+  const cardsTurned = playState?.cardsTurned
 
   const nextCard = Array.isArray(toPlay) && toPlay.length > 0 && toPlay[0]
   // TODO pick slide name from drop down or similar
@@ -230,7 +239,7 @@ function appView (state, emit) {
         <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon' style='cursor: ${canStart ? 'pointer' : 'default'}'>▶</button>
         <button disabled=${!canStop} onclick=${() => emit('stop')} class='emoji-icon' style='cursor: ${canStop ? 'pointer' : 'default'}'>⏹</button>
         <button disabled=${!canBack} onclick=${() => emit('back')} class='emoji-icon' style='cursor: ${canBack ? 'pointer' : 'default'}'>⏪</button>
-        <button disabled=${!canTurnCards} class='emoji-icon' style='cursor: ${canTurnCards ? 'pointer' : 'default'}'>🔁</button>
+        <button disabled=${!canTurnCards} onclick=${() => emit('turn-cards')} class='emoji-icon' style='cursor: ${canTurnCards ? 'pointer' : 'default'}'>🔁</button>
       </div>
         <button disabled=${!canShowSettings} class='emoji-icon' style='cursor: ${canShowSettings ? 'pointer' : 'default'}'>⚙</button>
       </div>
@@ -238,12 +247,12 @@ function appView (state, emit) {
     <div id='card-area'>
       <div id='positive-wrapper'>
         <div class='card-holder'>
-          ${upCards.map(c => html`<div class='card'>${c.title}</div>`)}
+          ${upCards.map(renderPlayedCard)}
         </div>
       </div>
       <div id='negative-wrapper'>
         <div class='card-holder'>
-          ${downCards.map(c => html`<div class='card'>${c.title}</div>`)}
+          ${downCards.map(renderPlayedCard)}
         </div>
       </div>
     </div>
@@ -258,6 +267,12 @@ function renderNextCard (card, emit) {
       <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
     </div>
    </div>`
+}
+
+function renderPlayedCard (card) {
+  return html`<div class='card'>
+    ${card.title}
+  </div>`
 }
 
 app.route('*', (state, emit) => {
