@@ -1,12 +1,12 @@
-# polslides
+# motion-cards
 
-> Educational tool for discussing historic political decisions
+> Educational tool for discussing political motions
 
 ## license
 
 Licensed under `GPL-3.0-or-later`, see [LICENSE](./LICENSE) file for details.
 
-> Copyright © 2019 `polslide` contributors.
+> Copyright © 2019 `motion-cards` contributors.
 
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by

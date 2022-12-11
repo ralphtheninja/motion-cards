@@ -2,7 +2,7 @@ const app = require('choo')({ history: false })
 const html = require('choo/html')
 // const level = require('level')
 // const sub = require('subleveldown')
-// const db = level('polslides')
+// const db = level('motion-cards')
 
 app.use((state, emitter) => {
   // TODO load cards from db
