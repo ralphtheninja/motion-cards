@@ -1,102 +1,105 @@
+const BLUE = '#3e3eff'
+const RED = '#f96161'
+
 const allCards = [
   {
     title: '2 undantag i LAS för mindre företag',
-    color: 'blue',
+    color: BLUE,
     id: 1
   },
   {
     title: 'Sjukpenninggrundande inkomst',
-    color: 'red',
+    color: RED,
     id: 2
   },
   {
     title: 'Statsbudget 2003',
-    color: 'red',
+    color: RED,
     id: 3
   },
   {
     title: 'Finansiering av boendet',
-    color: 'red',
+    color: RED,
     id: 4
   },
   {
     title: 'Statsbudget 2004',
-    color: 'red',
+    color: RED,
     id: 5
   },
   {
     title: 'Karensdagen',
-    color: 'red',
+    color: RED,
     id: 6
   },
   {
     title: 'Flexibla sjukskrivningsnivåer i sjukförsäkringen',
-    color: 'red',
+    color: RED,
     id: 7
   },
   {
     title: 'Statsbudget 2005',
-    color: 'red',
+    color: RED,
     id: 8
   },
   {
     title: 'Samhällsekonomisk konsekvensanalys vid nedskärning',
-    color: 'red',
+    color: RED,
     id: 9
   },
   {
     title: 'Statsbudget 2006',
-    color: 'red',
+    color: RED,
     id: 10
   },
   {
     title: 'Första Hjälpen',
-    color: 'red',
+    color: RED,
     id: 11
   },
   {
     title: 'Jämställdhet',
-    color: 'blue',
+    color: BLUE,
     id: 12
   },
   {
     title: 'Statsbudget 2007',
-    color: 'blue',
+    color: BLUE,
     id: 13
   },
   {
     title: 'Ändring i inkomstskattelagen',
-    color: 'blue',
+    color: BLUE,
     id: 14
   },
   {
     title: 'En a-kassa för arbete',
-    color: 'blue',
+    color: BLUE,
     id: 15
   },
   {
     title: 'Höjd sjukersättning',
-    color: 'red',
+    color: RED,
     id: 16
   },
   {
     title: 'Friskvård under arbetstid',
-    color: 'red',
+    color: RED,
     id: 17
   },
   {
     title: 'Multinationella företag och fackliga rättigheter',
-    color: 'red',
+    color: RED,
     id: 18
   },
   {
     title: 'Ytterligare reformer inom arbetsmarknadspolitiken',
-    color: 'blue',
+    color: BLUE,
     id: 19
   },
   {
     title: 'Auktorisering av bemanningsföretag',
-    color: 'red',
+    color: RED,
     id: 20
   }
 ]
