@@ -146,7 +146,7 @@ function style () {
       bottom: 30%;
       left: 30%;
       right: 30%;
-      border: 1px solid black;
+      border: 10px solid black;
       border-radius: 2em;
       background: #eed470;
       z-index: 10;
@@ -165,7 +165,7 @@ function style () {
       flex-wrap: wrap;
     }
     .card {
-      border: 1px solid black;
+      border: 4px solid black;
       border-radius: 1em;
       padding: 1.5em;
       width: 13em;
