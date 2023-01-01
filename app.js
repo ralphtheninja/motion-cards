@@ -140,14 +140,15 @@ function style () {
       right: 0;
     }
     #next-card {
+      padding: 4em;
       position: absolute;
       top: 30%;
       bottom: 30%;
       left: 30%;
       right: 30%;
       border: 1px solid black;
-      background: #c0c0c0;
-      padding: 20px;
+      border-radius: 2em;
+      background: #eed470;
       z-index: 10;
       display: flex;
       flex-direction: column;
@@ -226,7 +227,7 @@ function appView (state, emit) {
 
 function renderNextCard (card, emit) {
   return html`<div id='next-card'>
-    <div>${card.title}</div>
+    <div style="font-size: 2em;">${card.title}</div>
     <div style="display: flex; justify-content: space-between;">
       <button onclick=${() => emit('vote-up', card)} class='emoji-icon'>➕</button>
       <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
