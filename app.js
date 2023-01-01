@@ -160,7 +160,7 @@ function style () {
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 10px;
+      padding: 2em;
       display: flex;
       flex-wrap: wrap;
     }
