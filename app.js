@@ -1,5 +1,6 @@
 const app = require('choo')({ history: false })
 const html = require('choo/html')
+const { allCards, slides } = require('./cards.js')
 // const level = require('level')
 // const sub = require('subleveldown')
 // const db = level('motion-cards')
@@ -15,42 +16,7 @@ app.use((state, emitter) => {
   // })
   // TODO ids should be uuids
 
-  const allCards = [
-    {
-      title: 'card1',
-      color: 'blue',
-      id: 1
-    },
-    {
-      title: 'card2',
-      color: 'blue',
-      id: 2
-    },
-    {
-      title: 'card3',
-      color: 'blue',
-      id: 3
-    },
-    {
-      title: 'card4',
-      color: 'red',
-      id: 4
-    },
-    {
-      title: 'card5',
-      color: 'red',
-      id: 5
-    }
-  ]
-
-  // A slide object has a name and an array of cards
-  // But the play state, vote state etc should be separate
-  const slides = [
-    {
-      name: 'slide1',
-      cards: [5, 1, 4]
-    }
-  ]
+  // TODO using hardcoded cards and series for now
 
   state.app = {
     allCards,
