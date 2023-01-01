@@ -166,11 +166,10 @@ function style () {
     .card {
       border: 1px solid black;
       padding: 10px;
-      width: 100px;
-      height: 50px;
+      width: 200px;
+      height: 75px;
       margin-right: 10px;
       margin-bottom: 10px;
-      width: 100px;
     }
   </style>`
 }
