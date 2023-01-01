@@ -131,6 +131,10 @@ function style () {
       border: 0;
       border-bottom: 4px gray;
       border-style: dashed;
+      background-color: #d3d3d3;
+      background-image: url('plus.png');
+      background-size: 50px;
+      background-blend-mode: overlay;
     }
     #negative-wrapper {
       position: absolute;
