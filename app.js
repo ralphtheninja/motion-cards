@@ -229,7 +229,7 @@ function appView (state, emit) {
 
 function renderNextCard (card, emit) {
   return html`<div id='next-card'>
-    <div style="font-size: 2em;">${card.title}</div>
+    <div style="font-size: 3em; line-height: 2em;"><center>${card.title}</center></div>
     <div style="display: flex; justify-content: space-between;">
       <button onclick=${() => emit('vote-up', card)} class='emoji-icon'>➕</button>
       <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
