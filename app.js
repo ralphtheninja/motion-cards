@@ -140,7 +140,7 @@ function style () {
       right: 0;
     }
     #next-card {
-      padding: 4em;
+      padding: 3em;
       position: absolute;
       top: 30%;
       bottom: 30%;
@@ -153,6 +153,7 @@ function style () {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      font-weight: bold;
     }
     .card-holder {
       position: absolute;
