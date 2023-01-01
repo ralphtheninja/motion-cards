@@ -165,6 +165,7 @@ function style () {
     }
     .card {
       border: 1px solid black;
+      border-radius: 1em;
       padding: 1.5em;
       width: 13em;
       height: 5em;
