@@ -165,11 +165,11 @@ function style () {
     }
     .card {
       border: 1px solid black;
-      padding: 10px;
-      width: 200px;
-      height: 75px;
-      margin-right: 10px;
-      margin-bottom: 10px;
+      padding: 1.5em;
+      width: 13em;
+      height: 5em;
+      margin-right: 3em;
+      line-height: 1.5em;
     }
   </style>`
 }
