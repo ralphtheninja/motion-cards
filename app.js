@@ -168,10 +168,11 @@ function style () {
       border: 4px solid black;
       border-radius: 1em;
       padding: 1.5em;
-      width: 13em;
+      width: 14em;
       height: 5em;
       margin-right: 3em;
       line-height: 1.5em;
+      font-weight: bold;
     }
   </style>`
 }
