@@ -240,7 +240,7 @@ function renderNextCard (card, emit) {
 function renderPlayedCard (card, turned) {
   const background = turned ? card.color : '#c0c0c0'
   return html`<div class='card' style='background: ${background}'>
-    ${card.title}
+    <center>${card.title}</center>
   </div>`
 }
 
