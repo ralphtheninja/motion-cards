@@ -16,7 +16,7 @@
     "test": "standard",
     "start": "npm run prepare && cp index-dev.html public/index.html && npm run web",
     "build": "npm run prepare && npm run browserify",
-    "prepare": "rm -rf public && mkdir public && cp plus.png public/plus.png",
+    "prepare": "rm -rf public && mkdir public && cp plus.png minus.png public",
     "browserify": "browserify app.js | indexhtmlify --title 'Motion Slides' > public/index.html",
     "web": "budo app.js -l -d public"
   }

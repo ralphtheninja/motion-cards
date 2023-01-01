@@ -133,7 +133,7 @@ function style () {
       border-style: dashed;
       background-color: #d3d3d3;
       background-image: url('plus.png');
-      background-size: 50px;
+      background-size: 100px;
       background-blend-mode: overlay;
     }
     #negative-wrapper {
@@ -142,6 +142,10 @@ function style () {
       bottom: 0;
       left: 0;
       right: 0;
+      background-color: #d3d3d3;
+      background-image: url('minus.png');
+      background-size: 100px;
+      background-blend-mode: overlay;
     }
     #next-card {
       padding: 3em;
