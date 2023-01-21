@@ -16,12 +16,25 @@ app.use((state, emitter) => {
   // })
   // TODO ids should be uuids
 
-  // TODO using hardcoded cards and series for now
+  // TODO using hardcoded cards and slides for now
 
   state.app = {
     allCards,
     slides,
-    play: null
+    play: null,
+    settings: {
+      // show: false
+      show: true,
+      activeTab: 'cards',
+      tabs: {
+        cards: {
+
+        },
+        slides: {
+
+        }
+      }
+    }
   }
 
   function cardState ({ cards }) {
@@ -47,6 +60,7 @@ app.use((state, emitter) => {
         played: [],
         cardsTurned: false
       }
+      state.app.settings.show = false
       emitter.emit('render')
     } else {
       console.error('could not find slide', slideName)
@@ -96,6 +110,15 @@ app.use((state, emitter) => {
       playState.cardsTurned = !playState.cardsTurned
       emitter.emit('render')
     }
+  })
+
+  emitter.on('settings:toggle', () => {
+    state.app.settings.show = !state.app.settings.show
+    emitter.emit('render')
+  })
+  emitter.on('settings:set-tab', (tab) => {
+    state.app.settings.activeTab = tab
+    emitter.emit('render')
   })
 })
 
@@ -185,6 +208,42 @@ function style () {
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    #settings {
+      padding: 1em;
+      position: absolute;
+      top: 20%;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      border: 5px solid black;
+      background: #d0edcf;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+    }
+    #settings-toolbar {
+      display: flex;
+    }
+    #settings-toolbar div {
+      line-height: 3em;
+      padding: 0 40px;
+    }
+    #settings-toolbar div:nth-child(1) {
+      border-top: 2px solid black;
+      border-left: 2px solid black;
+      border-right: 2px solid black;
+    }
+    #settings-toolbar div:nth-child(2) {
+      border-top: 2px solid black;
+      border-right: 2px solid black;
+    }
+
+    #settings-body {
+      border: 2px solid black;
+      height: 100%;
+    }
   </style>`
 }
 
@@ -213,6 +272,7 @@ function appView (state, emit) {
   const totalCount = playState?.totalCount || 0
 
   return html`<div id='app'>
+    ${(state.app.settings.show && renderSettings(state, emit)) || null}
     ${(nextCard && renderNextCard(nextCard, totalPlayed, totalCount, emit)) || null}
     <div id='toolbar'>
       <div>
@@ -221,7 +281,7 @@ function appView (state, emit) {
         <button disabled=${!canBack} onclick=${() => emit('back')} class='emoji-icon' style='cursor: ${canBack ? 'pointer' : 'default'}'>⏪</button>
         <button disabled=${!canTurnCards} onclick=${() => emit('turn-cards')} class='emoji-icon' style='cursor: ${canTurnCards ? 'pointer' : 'default'}'>🔁</button>
       </div>
-        <button disabled=${!canShowSettings} class='emoji-icon' style='cursor: ${canShowSettings ? 'pointer' : 'default'}'>⚙</button>
+        <button disabled=${!canShowSettings} onclick=${() => emit('settings:toggle')} class='emoji-icon' style='cursor: ${canShowSettings ? 'pointer' : 'default'}'>⚙</button>
       </div>
     </div>
     <div id='card-area'>
@@ -254,6 +314,32 @@ function renderPlayedCard (card, turned) {
   const background = turned ? card.color : '#c0c0c0'
   return html`<div class='card' style='background: ${background}'>
     <center>${card.title}</center>
+  </div>`
+}
+
+function renderSettings (state, emit) {
+  const { activeTab } = state.app.settings
+  return html`<div id='settings'>
+    <div id='settings-toolbar'>
+      <div onclick=${() => emit('settings:set-tab', 'cards')} style="background: ${activeTab === 'cards' ? '#44ec4f' : 'inherit'}">cards</div>
+      <div onclick=${() => emit('settings:set-tab', 'slides')} style="background: ${activeTab === 'slides' ? '#44ec4f' : 'inherit'}">slides</div>
+    </div>
+    <div id='settings-body'>
+      ${(activeTab === 'cards' && renderSettingsCardsTab(state, emit)) || null}
+      ${(activeTab === 'slides' && renderSettingsSlidesTab(state, emit)) || null}
+    </div>
+  </div>`
+}
+
+function renderSettingsCardsTab (state, emit) {
+  return html`<div id='settings-cards-tab'>
+    this is the cards tab
+  </div>`
+}
+
+function renderSettingsSlidesTab (state, emit) {
+  return html`<div id='settings-slides-tab'>
+    this is the slides tab
   </div>`
 }
 
