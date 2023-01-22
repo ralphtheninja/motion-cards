@@ -42,6 +42,7 @@ app.use((state, emitter) => {
       const toPlay = cardState(slide)
       state.app.play = {
         slideName,
+        totalCount: toPlay.length,
         toPlay,
         played: [],
         cardsTurned: false
@@ -208,9 +209,11 @@ function appView (state, emit) {
   const slideName = 'slide1'
 
   const canBack = played.length > 0
+  const totalPlayed = upCards.length + downCards.length
+  const totalCount = playState?.totalCount || 0
 
   return html`<div id='app'>
-    ${(nextCard && renderNextCard(nextCard, emit)) || null}
+    ${(nextCard && renderNextCard(nextCard, totalPlayed, totalCount, emit)) || null}
     <div id='toolbar'>
       <div>
         <button disabled=${!canStart} onclick=${() => emit('start', slideName)} class='emoji-icon' style='cursor: ${canStart ? 'pointer' : 'default'}'>▶</button>
@@ -236,11 +239,12 @@ function appView (state, emit) {
   </div>`
 }
 
-function renderNextCard (card, emit) {
+function renderNextCard (card, totalPlayed, totalCount, emit) {
   return html`<div id='next-card'>
     <div style="font-size: 2em; line-height: 2em;"><center>${card.title}</center></div>
     <div style="display: flex; justify-content: space-between;">
       <button onclick=${() => emit('vote-up', card)} class='emoji-icon'>➕</button>
+      <div>( ${totalPlayed + 1} / ${totalCount} )</div>
       <button onclick=${() => emit('vote-down', card)} class='emoji-icon'>➖</button>
     </div>
    </div>`
