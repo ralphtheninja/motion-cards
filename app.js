@@ -28,7 +28,7 @@ app.use((state, emitter) => {
       activeTab: 'cards',
       tabs: {
         cards: {
-          foo: 'bar'
+          selected: null
         },
         slides: {
 
@@ -118,6 +118,10 @@ app.use((state, emitter) => {
   })
   emitter.on('settings:set-tab', (tab) => {
     state.app.settings.activeTab = tab
+    emitter.emit('render')
+  })
+  emitter.on('settings:select-card', (id) => {
+    state.app.settings.tabs.cards.selected = id
     emitter.emit('render')
   })
 })
@@ -253,6 +257,7 @@ function style () {
     #settings-all-cards {
       min-width: 500px;
       overflow: auto;
+      border-right: 2px solid black;
     }
     #settings-all-cards div {
       border-bottom: 2px solid grey;
@@ -261,11 +266,12 @@ function style () {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      cursor: pointer;
     }
 
     #settings-selected-card {
-      border: 1px solid blue;
       width: 100%;
+      padding: 10px;
     }
   </style>`
 }
@@ -355,11 +361,12 @@ function renderSettings (state, emit) {
 }
 
 function renderSettingsCardsTab (state, emit) {
-  const { allCards } = state.app
+  const { allCards, settings } = state.app
+  const { cards } = settings.tabs
   return html`<div id='settings-cards-tab'>
     <div id='settings-all-cards'>
       ${allCards.map(c => {
-        return html`<div>${c.title}</div>`
+        return html`<div style="background: ${c.id === cards.selected ? '#44ec4f' : 'inherit'}" onclick=${() => emit('settings:select-card', c.id)}>${c.title}</div>`
       })}
     </div>
     <div id='settings-selected-card'>${renderSettingsSelectedCard(state, emit)}</div>
@@ -367,12 +374,12 @@ function renderSettingsCardsTab (state, emit) {
 }
 
 function renderSettingsSelectedCard (state, emit) {
-  const { selected } = state.app.settings.tabs.cards
+  const { allCards, settings } = state.app
+  const { cards } = settings.tabs
+  const { selected } = cards
   if (selected) {
-    console.log('selected card', selected)
-    return html`<div>
-      SELECTED A CARD
-    </div>`
+    const selectedCard = allCards.find(c => c.id === selected)
+    return html`<div>${selectedCard?.title}</div>`
   } else {
     return null
   }
