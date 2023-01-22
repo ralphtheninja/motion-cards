@@ -433,7 +433,7 @@ const allCards = [
 const slides = [
   {
     name: 'slide1',
-    cards: allCards.map(c => c.id)
+    cards: allCards.filter(c => c.id !== 78).map(c => c.id)
   }
 ]
 
