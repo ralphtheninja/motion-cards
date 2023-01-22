@@ -28,7 +28,7 @@ app.use((state, emitter) => {
       activeTab: 'cards',
       tabs: {
         cards: {
-
+          foo: 'bar'
         },
         slides: {
 
@@ -212,8 +212,8 @@ function style () {
     #settings {
       padding: 1em;
       position: absolute;
-      top: 20%;
-      bottom: 20%;
+      top: 10%;
+      bottom: 10%;
       left: 10%;
       right: 10%;
       border: 5px solid black;
@@ -242,7 +242,30 @@ function style () {
 
     #settings-body {
       border: 2px solid black;
+      height: calc(100% - 60px);
+    }
+
+    #settings-cards-tab {
+      display: flex;
       height: 100%;
+    }
+
+    #settings-all-cards {
+      min-width: 500px;
+      overflow: auto;
+    }
+    #settings-all-cards div {
+      border-bottom: 2px solid grey;
+      line-height: 4em;
+      padding-left: 1em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #settings-selected-card {
+      border: 1px solid blue;
+      width: 100%;
     }
   </style>`
 }
@@ -332,9 +355,27 @@ function renderSettings (state, emit) {
 }
 
 function renderSettingsCardsTab (state, emit) {
+  const { allCards } = state.app
   return html`<div id='settings-cards-tab'>
-    this is the cards tab
+    <div id='settings-all-cards'>
+      ${allCards.map(c => {
+        return html`<div>${c.title}</div>`
+      })}
+    </div>
+    <div id='settings-selected-card'>${renderSettingsSelectedCard(state, emit)}</div>
   </div>`
+}
+
+function renderSettingsSelectedCard (state, emit) {
+  const { selected } = state.app.settings.tabs.cards
+  if (selected) {
+    console.log('selected card', selected)
+    return html`<div>
+      SELECTED A CARD
+    </div>`
+  } else {
+    return null
+  }
 }
 
 function renderSettingsSlidesTab (state, emit) {
