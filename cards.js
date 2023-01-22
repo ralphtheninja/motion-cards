@@ -1,4 +1,4 @@
-const BLUE = '#3e3eff'
+const BLUE = '#6969f3'
 const RED = '#f96161'
 const PURPLE = '#c11eee'
 
