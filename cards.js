@@ -1,6 +1,6 @@
 const BLUE = '#3e3eff'
 const RED = '#f96161'
-const PURPLE = '#f96161'
+const PURPLE = '#c11eee'
 
 const allCards = [
   {
