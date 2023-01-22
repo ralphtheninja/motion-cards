@@ -174,6 +174,11 @@ const allCards = [
     id: 34
   },
   {
+    title: 'Statsbudget 2010',
+    color: BLUE,
+    id: 35
+  },
+  {
     title: 'En förenklad semesterlag',
     color: BLUE,
     id: 36
